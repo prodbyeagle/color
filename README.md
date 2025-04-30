@@ -1,6 +1,6 @@
-# 🦅 eaglecolor
+# 🦅 @prodbyeagle/color
 
-**eaglecolor** is a lightweight, framework-agnostic TypeScript library for extracting and formatting dominant colors from images. It supports RGB, HEX, and HSL formats, making it ideal for color palette generation, theming, and creative applications.
+**@prodbyeagle/color** is a lightweight, framework-agnostic TypeScript library for extracting and formatting dominant colors from images. It supports RGB, HEX, and HSL formats, making it ideal for color palette generation, theming, and creative applications.
 
 ---
 
@@ -18,13 +18,13 @@
 ## 🚀 Installation
 
 ```
-bun add eaglecolor
+bun add @prodbyeagle/color
 ```
 
 Or with npm:
 
 ```
-npm install eaglecolor
+npm install @prodbyeagle/color
 ```
 
 ---
@@ -77,7 +77,7 @@ Tests live under `tests/`. Written using Bun's test runner.
 ## 🛠 Build
 
 ```bash
-bun run build
+bun build:bun // bun build:node
 ```
 
 This will emit the compiled ESM output to `dist/` (via `tsconfig.json` settings).
