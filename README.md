@@ -17,15 +17,13 @@
 
 ## 🚀 Installation
 
-```bash
+```
 bun add eaglecolor
 ```
 
-````
-
 Or with npm:
 
-```bash
+```
 npm install eaglecolor
 ```
 
@@ -84,11 +82,6 @@ bun run build
 
 This will emit the compiled ESM output to `dist/` (via `tsconfig.json` settings).
 
----
-
 ## 🧼 License
 
 MIT – use freely in personal or commercial work.
-
----
-```
