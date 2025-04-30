@@ -1,4 +1,4 @@
-import { rgbToHex, rgbToHsl } from '../lib/convert';
+import { rgbToHex, rgbToHsl } from '@/src/lib/convert';
 import { expect, test } from 'bun:test';
 
 test('rgbToHex converts RGB to HEX', () => {

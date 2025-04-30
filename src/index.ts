@@ -1,6 +1,6 @@
-import { getImageDataFromFile } from './lib/image-utils';
-import { quantize } from './lib/quantize';
-import { formatColors } from './lib/format';
+import { getImageDataFromFile } from '@/src/lib/image-utils';
+import { quantize } from '@/src/lib/quantize';
+import { formatColors } from '@/src/lib/format';
 
 export type ColorFormat = 'rgb' | 'hex' | 'hsl';
 

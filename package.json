@@ -3,7 +3,7 @@
 	"type": "module",
 	"module": "index.ts",
 	"scripts": {
-		"build": "bun build index.ts --outdir dist --target bun"
+		"s": "bun build index.ts --outdir dist --sourcemap --target=node --minify"
 	},
 	"devDependencies": {
 		"@types/bun": "^1.2.11"

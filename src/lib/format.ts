@@ -1,4 +1,4 @@
-import { rgbToHex, rgbToHsl } from './convert';
+import { rgbToHex, rgbToHsl } from '@/src/lib/convert';
 
 /**
  * Formats a list of RGB color arrays into a specified format (RGB, HEX, or HSL).

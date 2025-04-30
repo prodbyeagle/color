@@ -1,4 +1,4 @@
-import { quantize } from '../lib/quantize';
+import { quantize } from '@/src/lib/quantize';
 import { expect, test } from 'bun:test';
 
 test('quantize returns correct number of colors', () => {
