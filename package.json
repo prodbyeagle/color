@@ -1,14 +1,26 @@
 {
-	"name": "eaglecolor",
+	"name": "@prodbyeagle/color",
+	"version": "0.0.1",
+	"description": "A Bun package for color manipulation and conversion.",
+	"license": "MIT",
+	"author": "prodbyeagle",
+	"private": false,
 	"type": "module",
-	"module": "index.ts",
-	"scripts": {
-		"s": "bun build index.ts --outdir dist --sourcemap --target=node --minify"
+	"module": "./src/index.ts",
+	"packageManager": "bun@1.2.11",
+	"engines": {
+		"bun": ">=1.2.11"
 	},
-	"devDependencies": {
-		"@types/bun": "^1.2.11"
+	"scripts": {
+		"clean": "bun rm dist",
+		"build:node": "bun run clean && bun build ./src/index.ts --outdir dist --target=node",
+		"build:bun": "bun run clean && bun build ./src/index.ts --outdir dist --target=bun",
+		"start": "node dist/index.js"
 	},
 	"peerDependencies": {
 		"typescript": "^5.8.3"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.2.11"
 	}
 }
