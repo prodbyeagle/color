@@ -1,0 +1,14 @@
+{
+	"name": "eaglecolor",
+	"type": "module",
+	"module": "index.ts",
+	"scripts": {
+		"build": "bun build index.ts --outdir dist --target bun"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.2.11"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.3"
+	}
+}
