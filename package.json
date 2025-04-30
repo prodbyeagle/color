@@ -1,11 +1,13 @@
 {
 	"name": "@prodbyeagle/color",
 	"version": "0.0.1",
-	"description": "A Bun package for color manipulation and conversion.",
+	"description": "A lightweight TypeScript library for extracting and formatting dominant colors from images.",
 	"license": "MIT",
 	"author": "prodbyeagle",
 	"private": false,
 	"type": "module",
+	"repository": "https://github.com/prodbyeagle/color",
+	"homepage": "https://github.com/prodbyeagle/color#readme",
 	"module": "./src/index.ts",
 	"packageManager": "bun@1.2.11",
 	"engines": {
