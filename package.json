@@ -1,6 +1,6 @@
 {
 	"name": "@prodbyeagle/color",
-	"version": "0.0.2",
+	"version": "0.1.0",
 	"description": "A lightweight TypeScript library for extracting and formatting dominant colors from images.",
 	"license": "MIT",
 	"author": "prodbyeagle",
@@ -8,16 +8,17 @@
 	"type": "module",
 	"repository": "https://github.com/prodbyeagle/color",
 	"homepage": "https://github.com/prodbyeagle/color#readme",
-	"module": "./src/index.ts",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"packageManager": "bun@1.2.11",
 	"engines": {
 		"bun": ">=1.2.11"
 	},
 	"scripts": {
 		"clean": "bun rm dist",
-		"build:node": "bun run clean && bun build ./src/index.ts --outdir dist --target=node",
-		"build:bun": "bun run clean && bun build ./src/index.ts --outdir dist --target=bun",
-		"start": "node dist/index.js"
+		"cook": "bun run clean && bun run build:js && bun run build:types",
+		"build:js": "bun build ./src/index.ts --sourcemap=external --outdir dist --target=node",
+		"build:types": "tsc --emitDeclarationOnly --project tsconfig.json"
 	},
 	"peerDependencies": {
 		"typescript": "^5.8.3"

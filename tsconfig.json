@@ -8,11 +8,18 @@
 		"jsx": "react-jsx",
 		"allowJs": true,
 
+		"declaration": true,
+		"declarationMap": true,
+		"emitDeclarationOnly": true,
+
+		"outDir": "dist",
+		"rootDir": "src",
+		"noEmit": false,
+
 		// Bundler mode
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"verbatimModuleSyntax": true,
-		"noEmit": true,
 
 		"paths": {
 			"@/*": ["./*"]
