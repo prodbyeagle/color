@@ -1,13 +1,21 @@
 /**
- * Converts a Blob (e.g., File or image response) into raw image pixel data.
+ * Converts a `Blob` (such as a `File` or image fetched from a URL) into raw pixel data.
  *
- * @param file - A Blob representing the image (e.g., from file input or fetch).
- * @returns A Promise resolving to an `ImageData` object containing raw RGBA data.
+ * This utility loads the image into memory using `createImageBitmap`, renders it to an
+ * `OffscreenCanvas`, and extracts the image’s RGBA pixel data via `ImageData`.
  *
- * @throws If the canvas 2D context cannot be initialized.
+ * It supports all common image formats (JPEG, PNG, WebP, etc.) as long as they are browser-decodable.
+ *
+ * @param file - A `Blob` representing the image. This could come from an `<input type="file">` element or a network response.
+ * @returns A `Promise` that resolves to an `ImageData` object containing the raw RGBA pixel data.
+ *
+ * @throws Will throw an error if the 2D rendering context could not be initialized.
  *
  * @example
- * const data = await getImageDataFromFile(file);
+ * ```ts
+ * const imageData = await getImageDataFromFile(file);
+ * const { width, height, data } = imageData;
+ * ```
  */
 export async function getImageDataFromFile(file: Blob): Promise<ImageData> {
 	const bitmap = await createImageBitmap(file);

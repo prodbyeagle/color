@@ -1,13 +1,23 @@
 /**
- * Performs color quantization on image data using K-means clustering.
+ * Performs color quantization on raw image data using K-means clustering.
  *
- * @param data - The raw RGBA image data (from canvas or image bitmap).
- * @param maxColors - The maximum number of distinct colors to return.
- * @returns An array of RGB color values, each represented as `[r, g, b]`.
+ * This function extracts the visible (non-transparent) pixels from an image's RGBA data
+ * and clusters them into a representative color palette using the K-means algorithm.
+ *
+ * Transparent pixels (alpha < 16) are ignored to prevent background colors or padding
+ * from affecting the results—this is especially important when analyzing PNG images with
+ * transparency.
+ *
+ * @param data - A `Uint8ClampedArray` of raw image data in RGBA format (typically from `ImageData.data`).
+ * @param maxColors - The maximum number of colors to extract. Also used as the number of K-means clusters.
+ * @returns An array of dominant colors represented as RGB triplets, e.g., `[[255, 0, 0], [0, 255, 0], ...]`.
  *
  * @example
- * const result = quantize(imageData, 5);
- * // result = [[255, 0, 0], [0, 255, 0], ...]
+ * ```ts
+ * const imageData = await getImageDataFromFile(file);
+ * const palette = quantize(imageData.data, 5);
+ * // palette: [[123, 45, 67], [89, 210, 123], ...]
+ * ```
  */
 export function quantize(
 	data: Uint8ClampedArray,
@@ -19,6 +29,11 @@ export function quantize(
 		const r = data[i] ?? 0;
 		const g = data[i + 1] ?? 0;
 		const b = data[i + 2] ?? 0;
+		const a = data[i + 3] ?? 255;
+
+		// Ignore fully or nearly transparent pixels
+		if (a < 16) continue;
+
 		pixels.push([r, g, b]);
 	}
 
@@ -26,11 +41,21 @@ export function quantize(
 }
 
 /**
- * Runs a simplified K-means clustering algorithm to group similar colors.
+ * Runs a basic K-means clustering algorithm on a set of RGB pixels.
  *
- * @param pixels - An array of `[r, g, b]` values.
- * @param k - Number of clusters to generate (i.e. desired number of colors).
- * @returns The calculated centroids representing dominant colors.
+ * This function partitions the given pixel colors into `k` clusters by repeatedly assigning
+ * pixels to the nearest centroid and updating centroid positions based on the mean of their cluster.
+ * The algorithm runs for a fixed number of iterations (10).
+ *
+ * @param pixels - An array of RGB colors, each represented as `[r, g, b]`.
+ * @param k - Number of clusters to compute. Usually corresponds to the desired number of dominant colors.
+ * @returns An array of cluster centroids (dominant colors), each as `[r, g, b]`.
+ *
+ * @example
+ * ```ts
+ * const dominant = kMeans([[255, 0, 0], [250, 5, 5], [0, 255, 0]], 2);
+ * // dominant: [[252, 2, 2], [0, 255, 0]]
+ * ```
  */
 export function kMeans(pixels: number[][], k: number): number[][] {
 	const centroids: number[][] = pixels.slice(0, k);
@@ -70,11 +95,18 @@ export function kMeans(pixels: number[][], k: number): number[][] {
 }
 
 /**
- * Calculates the Euclidean distance between two RGB vectors.
+ * Calculates the Euclidean distance between two RGB colors.
  *
- * @param a - First RGB vector.
- * @param b - Second RGB vector.
- * @returns Distance between the two vectors.
+ * Used as the distance metric in K-means clustering. Ignores alpha channels.
+ *
+ * @param a - First RGB vector `[r, g, b]`.
+ * @param b - Second RGB vector `[r, g, b]`.
+ * @returns The Euclidean distance between the two colors.
+ *
+ * @example
+ * ```ts
+ * const d = dist([255, 0, 0], [128, 0, 0]); // ≈ 127
+ * ```
  */
 export function dist(a: number[], b: number[]): number {
 	const len = Math.min(a.length, b.length);
