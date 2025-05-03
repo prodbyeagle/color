@@ -31,7 +31,6 @@ export function quantize(
 		const b = data[i + 2] ?? 0;
 		const a = data[i + 3] ?? 255;
 
-		// Ignore fully or nearly transparent pixels
 		if (a < 16) continue;
 
 		pixels.push([r, g, b]);
