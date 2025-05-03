@@ -20,10 +20,6 @@
 		"allowImportingTsExtensions": true,
 		"verbatimModuleSyntax": true,
 
-		"paths": {
-			"@/*": ["./*"]
-		},
-
 		// Best practices
 		"strict": true,
 		"skipLibCheck": true,
