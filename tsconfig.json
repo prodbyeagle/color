@@ -13,7 +13,6 @@
 		"emitDeclarationOnly": true,
 
 		"outDir": "dist",
-		"rootDir": "src",
 		"noEmit": false,
 
 		// Bundler mode
