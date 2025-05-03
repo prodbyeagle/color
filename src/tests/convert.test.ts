@@ -1,5 +1,5 @@
-import { rgbToHex, rgbToHsl } from '@/src/lib/convert';
 import { expect, test } from 'bun:test';
+import { rgbToHex, rgbToHsl } from '../lib/convert';
 
 test('rgbToHex converts RGB to HEX', () => {
 	expect(rgbToHex([255, 0, 0])).toBe('#ff0000');

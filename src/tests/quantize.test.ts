@@ -1,5 +1,5 @@
-import { quantize } from '@/src/lib/quantize';
 import { expect, test } from 'bun:test';
+import { quantize } from '../lib/quantize';
 
 test('quantize returns correct number of colors', () => {
 	const imageData = new Uint8ClampedArray([

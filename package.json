@@ -15,9 +15,7 @@
 	},
 	"scripts": {
 		"clean": "bun rm dist",
-		"build:node": "bun run clean && bun build ./src/index.ts --outdir dist --target=node",
-		"build:bun": "bun run clean && bun build ./src/index.ts --outdir dist --target=bun",
-		"start": "node dist/index.js"
+		"cook": "bun run clean && bun build ./index.ts --sourcemap=external --outdir dist --target=node"
 	},
 	"peerDependencies": {
 		"typescript": "^5.8.3"

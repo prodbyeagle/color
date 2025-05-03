@@ -1,6 +1,6 @@
-import { getImageDataFromFile } from '@/src/lib/image-utils';
-import { quantize } from '@/src/lib/quantize';
-import { formatColors } from '@/src/lib/format';
+import { getImageDataFromFile } from './lib/image-utils';
+import { quantize } from './lib/quantize';
+import { formatColors } from './lib/format';
 
 /**
  * A type representing supported color formats.
