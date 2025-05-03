@@ -32,7 +32,7 @@ export function quantize(
  * @param k - Number of clusters to generate (i.e. desired number of colors).
  * @returns The calculated centroids representing dominant colors.
  */
-function kMeans(pixels: number[][], k: number): number[][] {
+export function kMeans(pixels: number[][], k: number): number[][] {
 	const centroids: number[][] = pixels.slice(0, k);
 	const clusters: number[][][] = Array.from({ length: k }, () => []);
 
@@ -76,7 +76,7 @@ function kMeans(pixels: number[][], k: number): number[][] {
  * @param b - Second RGB vector.
  * @returns Distance between the two vectors.
  */
-function dist(a: number[], b: number[]): number {
+export function dist(a: number[], b: number[]): number {
 	const len = Math.min(a.length, b.length);
 	let sum = 0;
 	for (let i = 0; i < len; i++) {
