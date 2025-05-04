@@ -1,4 +1,4 @@
-import { rgbToXyz, xyzToLab, labToOklch } from '.';
+import { rgbToXyz, xyzToLab, labToOklch } from './index';
 
 /**
  * Converts an RGB array to a HEX color string.
