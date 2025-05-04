@@ -1,3 +1,5 @@
+import { rgbToXyz, xyzToLab, labToOklch } from '.';
+
 /**
  * Converts an RGB array to a HEX color string.
  *
@@ -44,4 +46,11 @@ export function rgbToHsl(rgb: number[]): string {
 	return `hsl(${Math.round(h)}, ${Math.round(s * 100)}%, ${Math.round(
 		l * 100
 	)}%)`;
+}
+
+export function rgbToOklch(rgb: number[]): string {
+	const xyz = rgbToXyz(rgb);
+	const lab = xyzToLab(xyz);
+	const [l, c, h] = labToOklch(lab);
+	return `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${h.toFixed(1)}deg)`;
 }
