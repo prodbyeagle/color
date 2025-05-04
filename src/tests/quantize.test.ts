@@ -2,25 +2,19 @@ import { describe, expect, it } from 'bun:test';
 import { quantize, kMeans } from '../lib/quantization';
 import { dist } from '../lib/utils';
 
+function createImageData(
+	colors: [number, number, number, number][]
+): Uint8ClampedArray {
+	return new Uint8ClampedArray(colors.flat());
+}
+
 describe('quantize', () => {
 	it('filters out fully transparent pixels and returns quantized colors', () => {
-		const raw = new Uint8ClampedArray([
-			255,
-			0,
-			0,
-			255, // red
-			0,
-			255,
-			0,
-			255, // green
-			0,
-			0,
-			255,
-			0, // blue but fully transparent, should be skipped
-			255,
-			0,
-			0,
-			255, // red again
+		const raw = createImageData([
+			[255, 0, 0, 255],
+			[0, 255, 0, 255],
+			[0, 0, 255, 0], // transparent
+			[255, 0, 0, 255],
 		]);
 
 		const result = quantize(raw, 2, 5);
@@ -32,10 +26,49 @@ describe('quantize', () => {
 			])
 		);
 	});
+
+	it('returns empty array if all pixels are transparent', () => {
+		const raw = createImageData([
+			[100, 100, 100, 0],
+			[200, 200, 200, 10],
+		]);
+		const result = quantize(raw, 5);
+		expect(result).toEqual([]);
+	});
+
+	it('returns one color when only one visible pixel', () => {
+		const raw = createImageData([[123, 45, 67, 255]]);
+		const result = quantize(raw, 3);
+		expect(result.length).toBe(1);
+		expect(result[0]).toEqual([123, 45, 67]);
+	});
+
+	it('handles more clusters than available unique pixels', () => {
+		const raw = createImageData([
+			[255, 255, 0, 255],
+			[255, 255, 0, 255],
+		]);
+		const result = quantize(raw, 10);
+		expect(result.length).toBeLessThanOrEqual(2);
+	});
+});
+
+describe('quantize (performance)', () => {
+	it('handles large input efficiently under MAX_SAMPLE_SIZE', () => {
+		const pixel = [100, 150, 200, 255];
+		const raw = new Uint8ClampedArray(Array(4000).fill(pixel).flat());
+
+		const start = performance.now();
+		const result = quantize(raw, 5);
+		const end = performance.now();
+
+		expect(result.length).toBeLessThanOrEqual(5);
+		expect(end - start).toBeLessThan(100); // <100ms acceptable baseline
+	});
 });
 
 describe('kMeans', () => {
-	it('clusters colors into given number of centroids', () => {
+	it('clusters into the requested number of centroids', () => {
 		const pixels = [
 			[255, 0, 0],
 			[254, 0, 0],
@@ -48,6 +81,20 @@ describe('kMeans', () => {
 		for (const centroid of centroids) {
 			expect(centroid.length).toBe(3);
 		}
+	});
+
+	it('returns empty array for empty input', () => {
+		const result = kMeans([], 5);
+		expect(result).toEqual([]);
+	});
+
+	it('handles more clusters than data', () => {
+		const pixels = [
+			[10, 10, 10],
+			[20, 20, 20],
+		];
+		const result = kMeans(pixels, 5);
+		expect(result.length).toBeLessThanOrEqual(2);
 	});
 });
 
