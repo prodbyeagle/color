@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { rgbToHex, rgbToHsl } from '../lib/convert';
+import { rgbToHex, rgbToHsl, rgbToOklch } from '../lib/convert';
 
 describe('rgbToHex', () => {
 	it('converts primary colors to hex', () => {
@@ -35,5 +35,28 @@ describe('rgbToHsl', () => {
 	it('handles black and white', () => {
 		expect(rgbToHsl([0, 0, 0])).toBe('hsl(0, 0%, 0%)');
 		expect(rgbToHsl([255, 255, 255])).toBe('hsl(0, 0%, 100%)');
+	});
+});
+
+describe('rgbToOklch', () => {
+	it('returns expected format', () => {
+		expect(rgbToOklch([255, 0, 0])).toMatch(
+			/^oklch\(\d+\.\d{3} \d+\.\d{3} \d+\.\ddeg\)$/
+		);
+		expect(rgbToOklch([0, 255, 0])).toMatch(
+			/^oklch\(\d+\.\d{3} \d+\.\d{3} \d+\.\ddeg\)$/
+		);
+		expect(rgbToOklch([0, 0, 255])).toMatch(
+			/^oklch\(\d+\.\d{3} \d+\.\d{3} \d+\.\ddeg\)$/
+		);
+	});
+
+	it('handles black and white', () => {
+		expect(rgbToOklch([0, 0, 0])).toMatch(
+			/^oklch\(0\.000 0\.000 \d+\.\ddeg\)$/
+		);
+		expect(rgbToOklch([255, 255, 255])).toMatch(
+			/^oklch\(1\.000 0\.000 \d+\.\ddeg\)$/
+		);
 	});
 });
