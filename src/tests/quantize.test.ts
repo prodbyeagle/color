@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { dist, kMeans, quantize } from '../lib/quantize';
+import { dist, kMeans, quantize } from '../lib';
 
 describe('quantize', () => {
 	it('filters out fully transparent pixels and returns quantized colors', () => {
