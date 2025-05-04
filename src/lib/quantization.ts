@@ -4,8 +4,20 @@ const MAX_SAMPLE_SIZE = 2000;
 const MAX_ITERATIONS = 10;
 const ALPHA_THRESHOLD = 16;
 
+/**
+ * Calculates the squared Euclidean distance between two RGB color arrays.
+ *
+ * The function computes the distance as the sum of squared differences between the red,
+ * green, and blue components of two colors. It returns `Infinity` if either of the arrays
+ * is `undefined`.
+ *
+ * @param a - The first color array `[r, g, b]`.
+ * @param b - The second color array `[r, g, b]`.
+ * @returns The squared Euclidean distance between the two colors.
+ */
 function distSq(a: number[], b: number[]): number {
 	if (!a || !b) return Infinity;
+
 	let sum = 0;
 	for (let i = 0; i < 3; i++) {
 		const d = (a[i] ?? 0) - (b[i] ?? 0);
@@ -14,6 +26,15 @@ function distSq(a: number[], b: number[]): number {
 	return sum;
 }
 
+/**
+ * Shuffles an array in place using the Fisher-Yates algorithm.
+ *
+ * This function randomly reorders the elements of the array. It creates a copy of the
+ * input array before modifying it.
+ *
+ * @param arr - The array to shuffle.
+ * @returns A new array with the shuffled elements.
+ */
 function shuffle<T>(arr: T[]): T[] {
 	const copy = [...arr];
 	for (let i = copy.length - 1; i > 0; i--) {
@@ -25,6 +46,19 @@ function shuffle<T>(arr: T[]): T[] {
 	return copy;
 }
 
+/**
+ * Performs color quantization on raw image data using the K-means clustering algorithm.
+ *
+ * This function processes the RGBA image data, filters out fully transparent pixels
+ * (alpha value below the `ALPHA_THRESHOLD`), and applies K-means clustering to extract
+ * the most dominant colors in the image. It limits the number of clusters (colors) to
+ * the specified `maxColors` and returns the dominant colors as an array of RGB triplets.
+ *
+ * @param data - A `Uint8ClampedArray` of raw image data in RGBA format (typically from `ImageData.data`).
+ * @param maxColors - The maximum number of dominant colors to extract from the image.
+ * @param distanceThreshold - The threshold for filtering out similar colors from the final result. Default is 10.
+ * @returns An array of the dominant colors as RGB triplets, e.g., `[[255, 0, 0], [0, 255, 0], ...]`.
+ */
 export function quantize(
 	data: Uint8ClampedArray,
 	maxColors: number,
@@ -57,6 +91,19 @@ export function quantize(
 	return dominantColors;
 }
 
+/**
+ * Performs K-means clustering on an array of RGB colors.
+ *
+ * The function divides the given pixel colors into `k` clusters by iteratively
+ * assigning each pixel to the closest centroid and updating the centroids based on
+ * the mean of their corresponding cluster pixels. The algorithm runs for a fixed
+ * number of iterations or until convergence.
+ *
+ * @param pixels - An array of RGB colors, each represented as `[r, g, b]`.
+ * @param k - The number of clusters (centroids) to compute. Typically corresponds to the
+ *           number of dominant colors requested.
+ * @returns An array of `k` cluster centroids, each represented as `[r, g, b]`.
+ */
 export function kMeans(pixels: number[][], k: number): number[][] {
 	if (pixels.length === 0) return [];
 
