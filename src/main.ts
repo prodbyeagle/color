@@ -1,28 +1,43 @@
-import { getImageDataFromFile } from './lib/image-utils';
-import { quantize } from './lib/quantize';
-import { formatColors } from './lib/format';
+import { getImageDataFromFile, quantize, formatColors } from './lib';
 
 /**
- * A type representing supported color formats.
+ * Defines the supported output color formats.
+ *
+ * - `'rgb'`: Array of RGB triplets, e.g., `[255, 204, 0]`
+ * - `'hex'`: Hexadecimal color strings, e.g., `'#ffcc00'`
+ * - `'hsl'`: HSL strings, e.g., `'hsl(45, 100%, 50%)'`
+ * - `'oklch'`: OKLCH strings, e.g., `'oklch(0.823 0.173 84.2deg)'`
+ * - `'lab'`: CIE Lab strings, e.g., `'lab(84.2% 4.2 83.1)'`
  */
-export type ColorFormat = 'rgb' | 'hex' | 'hsl';
+export type ColorFormat = 'rgb' | 'hex' | 'hsl' | 'oklch' | 'lab';
 
 /**
- * Extracts the dominant colors from an image file or blob.
+ * Extracts a color palette from an image file or blob, returning the most dominant colors
+ * in the specified format.
  *
- * This function takes an image file or blob, extracts the pixel data, performs
- * quantization to reduce the number of colors, and then formats the resulting
- * color palette based on the desired output format (RGB, HEX, or HSL).
+ * This function performs the following steps:
+ * 1. Decodes the image and extracts raw pixel data.
+ * 2. Quantizes the image to reduce it to the most dominant colors.
+ * 3. Formats the resulting colors into the specified output format.
  *
- * @param imageFile - The image file or Blob from which colors will be extracted.
- * @param maxColors - The maximum number of colors to return in the palette.
- * @param format - The format to return the colors in, can be 'rgb', 'hex', or 'hsl'. Defaults to 'hex'.
- * @returns A promise that resolves to an array of colors in the specified format.
- *          - If 'hex' is selected, returns an array of hex color strings.
- *          - If 'rgb' is selected, returns an array of RGB color arrays.
- *          - If 'hsl' is selected, returns an array of HSL color strings.
+ * @param imageFile - A `File` or `Blob` representing the image source.
+ * @param maxColors - The maximum number of dominant colors to extract from the image.
+ *                    Must be a positive integer greater than 0.
+ * @param format - The desired output format for the extracted colors. Defaults to `'hex'`.
+ *                 Must be one of `'rgb'`, `'hex'`, `'hsl'`, `'oklch'`, or `'lab'`.
  *
- * @throws {Error} Throws an error if an unsupported format is provided.
+ * @returns A `Promise` resolving to an array of colors in the specified format:
+ * - `'rgb'`: Returns an array of RGB arrays — `number[][]`, e.g., `[[255, 204, 0], [0, 0, 0], ...]`
+ * - `'hex' | 'hsl' | 'oklch' | 'lab'`: Returns an array of formatted color strings — `string[]`
+ *
+ * @throws {Error} If an unsupported format is specified or if image decoding fails.
+ *
+ * @example
+ * ```ts
+ * const file = new File([/* image data *\/], 'photo.jpg', { type: 'image/jpeg' });
+ * const palette = await extractColors(file, 5, 'oklch');
+ * console.log(palette); // ['oklch(0.82 0.15 90.0deg)', ...]
+ * ```
  */
 export async function extractColors(
 	imageFile: File | Blob,
@@ -32,8 +47,17 @@ export async function extractColors(
 	const imageData = await getImageDataFromFile(imageFile);
 	const palette = quantize(imageData.data, maxColors);
 	const formattedColors = formatColors(palette, format);
-	if (format === 'hex' || format === 'rgb' || format === 'hsl') {
+
+	if (
+		format === 'hex' ||
+		format === 'rgb' ||
+		format === 'hsl' ||
+		format === 'oklch' ||
+		format === 'lab'
+	) {
 		return formattedColors as string[];
 	}
+
+	// Type fallback (shouldn't occur if types are enforced correctly)
 	return formattedColors as number[][];
 }
