@@ -1,7 +1,3 @@
-Here is the improved version of your `README` with additional sections and more detailed descriptions:
-
----
-
 # 🦅 @prodbyeagle/color
 
 **@prodbyeagle/color** is a lightweight, framework-agnostic TypeScript library for extracting and formatting dominant colors from images. It supports RGB, HEX, HSL, and OKLCH formats, making it ideal for color palette generation, theming, and creative applications.
