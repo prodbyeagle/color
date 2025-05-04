@@ -1,6 +1,6 @@
 {
 	"name": "@prodbyeagle/color",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "A lightweight TypeScript library for extracting and formatting dominant colors from images.",
 	"license": "MIT",
 	"author": "prodbyeagle",
