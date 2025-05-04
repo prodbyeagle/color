@@ -9,7 +9,7 @@ import { rgbToXyz, xyzToLab, labToOklch } from './colorConversion';
  * @example
  * rgbToHex([255, 204, 0]) // '#ffcc00'
  */
-export function rgbToHex(rgb: number[]) {
+export function rgbToHex(rgb: number[]): string {
 	const [r = 0, g = 0, b = 0] = rgb ?? [];
 	return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
@@ -48,6 +48,12 @@ export function rgbToHsl(rgb: number[]): string {
 	)}%)`;
 }
 
+/**
+ * Converts an RGB array to an OKLCH color string.
+ *
+ * @param rgb - An array `[r, g, b]` with red, green, and blue components.
+ * @returns An OKLCH color string, e.g., `oklch(0.5 0.6 180deg)`.
+ */
 export function rgbToOklch(rgb: number[]): string {
 	const xyz = rgbToXyz(rgb);
 	const lab = xyzToLab(xyz);
