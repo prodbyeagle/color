@@ -1,87 +1,119 @@
+Here is the improved version of your `README` with additional sections and more detailed descriptions:
+
+---
+
 # 🦅 @prodbyeagle/color
 
-**@prodbyeagle/color** is a lightweight, framework-agnostic TypeScript library for extracting and formatting dominant colors from images. It supports RGB, HEX, and HSL formats, making it ideal for color palette generation, theming, and creative applications.
+**@prodbyeagle/color** is a lightweight, framework-agnostic TypeScript library for extracting and formatting dominant colors from images. It supports RGB, HEX, HSL, and OKLCH formats, making it ideal for color palette generation, theming, and creative applications.
 
 ---
 
-## ✨ Features
+### ✨ Features
 
--   🎨 Quantizes colors using a simple k-means algorithm
--   🧠 Extracts dominant color clusters from images
--   📦 Formats to `rgb`, `hex`, or `hsl`
--   📁 Works with `Blob`, `File`, or `Image` sources
--   💡 Written in modern TypeScript
--   🛠 Zero dependencies
+-   🎨 **Color Quantization**: Uses a simple k-means algorithm to group similar colors together, ensuring accurate extraction of the most dominant colors.
+-   🧠 **Dominant Color Extraction**: Efficiently extracts the most prominent color clusters from images, ideal for dynamic theming or palette generation.
+-   📦 **Flexible Formatting**: Converts extracted colors into `rgb`, `hex`, `hsl`, or `oklch` formats, providing flexibility for various use cases.
+-   📁 **Source Flexibility**: Works with `Blob`, `File`, or `Image` sources, enabling easy integration with various input types (e.g., images from user uploads or external sources).
+-   🖥️ **TypeScript Support**: Built with TypeScript, ensuring type safety and auto-completion in modern IDEs.
+-   ⚡ **Lightweight**: Designed with performance in mind, minimizing overhead for fast execution even with large images.
 
 ---
 
-## 🚀 Installation
+### 🚀 Installation
+
+To install `@prodbyeagle/color` into your project:
+
+#### With Bun (Recommended for performance):
 
 ```
-bun add @prodbyeagle/color
+bunx jsr add @prodbyeagle/color
 ```
 
-Or with npm:
+#### With npm:
 
 ```
 npm install @prodbyeagle/color
 ```
 
+#### With yarn:
+
+```
+yarn add @prodbyeagle/color
+```
+
 ---
 
-## 🧪 Usage
+### 🔧 Usage
+
+#### Extract Dominant Colors
+
+To extract the dominant colors from an image, simply use the `extractColors` function. You can specify the source image, the maximum number of colors to extract, and the desired output format (`rgb`, `hex`, `hsl`, or `oklch`).
 
 ```ts
-import { getImageDataFromFile, quantize, formatColors } from 'eaglecolor';
+import { extractColors } from '@prodbyeagle/color';
 
-const file = /* some Blob or File (e.g. from input) */;
-const imageData = await getImageDataFromFile(file);
-const rawColors = quantize(imageData.data, 5); // top 5 dominant colors
-const hexColors = formatColors(rawColors, 'hex');
+// Example usage with an image file
+const imageFile = document.getElementById('image') as HTMLImageElement;
 
-console.log(hexColors); // ['#aabbcc', '#ff2211', ...]
+const colors = await extractColors(imageFile, 5, 'hex');
+console.log(colors); // Example output: ['#ffcc00', '#003366', '#cccccc']
 ```
 
 ---
 
-## 📚 API
+### 📚 API Reference
 
-### `getImageDataFromFile(file: Blob): Promise<ImageData>`
+#### `extractColors(imageFile: File | Blob, maxColors: number, format: ColorFormat = 'hex')`
 
-Converts an image file (or any blob) into raw `ImageData` (RGBA pixel array).
+-   **imageFile** (`File | Blob`): The image file or blob source from which colors will be extracted.
+-   **maxColors** (`number`): The maximum number of dominant colors to extract (e.g., 5 for a palette of 5 colors).
+-   **format** (`ColorFormat`, optional): The format in which to return the colors. Can be `'rgb'`, `'hex'`, `'hsl'`, or `'oklch'` (default is `'hex'`).
 
----
-
-### `quantize(data: Uint8ClampedArray, maxColors: number): number[][]`
-
-Extracts `maxColors` dominant `[r, g, b]` values from the image using a naive k-means clustering algorithm.
+**Returns**: A promise that resolves to an array of colors in the specified format.
 
 ---
 
-### `formatColors(colors: number[][], format: 'rgb' | 'hex' | 'hsl')`
+### 🎨 Supported Color Formats
 
-Formats raw `[r, g, b]` arrays into the desired color string format.
+-   **RGB**: An array of red, green, and blue values in the range \[0, 255].
+
+    -   Example: `[255, 204, 0]`
+
+-   **HEX**: A color string in hexadecimal format.
+
+    -   Example: `#ffcc00`
+
+-   **HSL**: A string representing the color in Hue, Saturation, and Lightness format.
+
+    -   Example: `'hsl(45, 100%, 50%)'`
+
+-   **OKLCH**: A string representing the color in the OKLCH color space (lightness, chroma, and hue).
+
+    -   Example: `'oklch(0.532 1.044 40.8deg)'`
 
 ---
 
-## 🧪 Testing
+### 💡 Use Cases
 
-```bash
-bun test
-```
-
-Tests live under `tests/`. Written using Bun's test runner.
+-   **Palette Generation**: Automatically extract the dominant colors from any image to create custom color palettes for your website or application.
+-   **Theming**: Dynamically adjust website themes based on the dominant color of uploaded images.
+-   **Image Analysis**: Analyze images for their prominent colors, useful in art, design, or even machine learning projects.
+-   **Creative Applications**: Ideal for creative tools or apps that need to generate or match colors to images.
 
 ---
 
-## 🛠 Build
+### 🛠️ Contributing
 
-```bash
-bun build:bun // bun build:node
-```
+We welcome contributions! If you'd like to improve this library, please feel free to open an issue or submit a pull request. Here's how you can contribute:
 
-This will emit the compiled ESM output to `dist/` (via `tsconfig.json` settings).
+1. Fork the repository.
+2. Clone your fork to your local machine.
+3. Create a new branch for your feature or bug fix.
+4. Make your changes and add tests if necessary.
+5. Submit a pull request with a detailed description of your changes.
 
-## 🧼 License
+---
 
-MIT – use freely in personal or commercial work.
+### 📝 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
