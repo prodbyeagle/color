@@ -1,4 +1,6 @@
-import { getImageDataFromFile, quantize, formatColors } from './lib';
+import { formatColors } from './lib/colorFormatters';
+import { getImageDataFromFile } from './lib/imageProcessing';
+import { quantize } from './lib/quantization';
 
 /**
  * Defines the supported output color formats.
@@ -58,6 +60,5 @@ export async function extractColors(
 		return formattedColors as string[];
 	}
 
-	// Type fallback (shouldn't occur if types are enforced correctly)
 	return formattedColors as number[][];
 }

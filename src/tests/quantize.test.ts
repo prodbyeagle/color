@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'bun:test';
-import { dist, kMeans, quantize } from '../lib';
+import { quantize, kMeans } from '../lib/quantization';
+import { dist } from '../lib/utils';
 
 describe('quantize', () => {
 	it('filters out fully transparent pixels and returns quantized colors', () => {
@@ -22,7 +23,7 @@ describe('quantize', () => {
 			255, // red again
 		]);
 
-		const result = quantize(raw, 2);
+		const result = quantize(raw, 2, 5);
 		expect(result.length).toBeLessThanOrEqual(2);
 		expect(result).toEqual(
 			expect.arrayContaining([
