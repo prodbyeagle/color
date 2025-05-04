@@ -1,0 +1,6 @@
+- add more color types ( oklch, ... )
+- improve performance of possible?
+- add new features
+- Polish current features
+- Rewrite Readme with better tutorial.
+- Maybe? Write an small website?
