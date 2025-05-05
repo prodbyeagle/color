@@ -10,7 +10,9 @@ import { quantize } from './lib/quantization';
  * - `'hsl'`: HSL strings, e.g., `'hsl(45, 100%, 50%)'`
  * - `'oklch'`: OKLCH strings, e.g., `'oklch(0.823 0.173 84.2deg)'`
  */
-export type ColorFormat = 'rgb' | 'hex' | 'hsl' | 'oklch';
+export interface ColorFormat {
+	format: 'rgb' | 'hex' | 'hsl' | 'oklch';
+}
 
 /**
  * Extracts a color palette from an image file or blob, returning the most dominant colors
@@ -44,21 +46,22 @@ export type ColorFormat = 'rgb' | 'hex' | 'hsl' | 'oklch';
 export async function extractColors(
 	imageFile: File | Blob,
 	maxColors: number,
-	format: ColorFormat = 'hex',
+	format: 'rgb' | 'hex' | 'hsl' | 'oklch' = 'hex',
 	distance: number = 10
 ): Promise<string[] | number[][]> {
+	if (maxColors <= 0 || !Number.isInteger(maxColors)) {
+		throw new Error('maxColors must be a positive integer greater than 0.');
+	}
+
+	if (!['rgb', 'hex', 'hsl', 'oklch'].includes(format)) {
+		throw new Error(`Unsupported color format: ${format}`);
+	}
+
 	const imageData = await getImageDataFromFile(imageFile);
 	const palette = quantize(imageData.data, maxColors, distance);
 	const formattedColors = formatColors(palette, format);
 
-	if (
-		format === 'hex' ||
-		format === 'rgb' ||
-		format === 'hsl' ||
-		format === 'oklch'
-	) {
-		return formattedColors as string[];
-	}
-
-	return formattedColors as number[][];
+	return format === 'rgb'
+		? (formattedColors as number[][])
+		: (formattedColors as string[]);
 }
