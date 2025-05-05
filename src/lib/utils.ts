@@ -33,7 +33,7 @@ export function dist(a: number[], b: number[]): number {
  */
 export function filterSimilarColors(
 	colors: number[][],
-	threshold: number = 10
+	threshold: number = 35
 ): number[][] {
 	const filteredColors: number[][] = [];
 
