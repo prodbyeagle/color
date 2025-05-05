@@ -25,7 +25,7 @@ import { rgbToHex, rgbToHsl, rgbToOklch } from './convert';
  */
 export function formatColors(
 	colors: number[][],
-	format: 'rgb' | 'hex' | 'hsl' | 'oklch' | 'lab'
+	format: 'rgb' | 'hex' | 'hsl' | 'oklch'
 ): (string | number[])[] {
 	switch (format) {
 		case 'rgb':
