@@ -59,4 +59,42 @@ describe('rgbToOklch', () => {
 			/^oklch\(1\.000 0\.000 \d+\.\ddeg\)$/
 		);
 	});
+
+	const parseOklch = (str: string): [number, number, number] => {
+		const match = str.match(/^oklch\(([\d.]+) ([\d.]+) ([\d.]+)deg\)$/);
+		expect(match).not.toBeNull();
+		return match!.slice(1).map(Number) as [number, number, number];
+	};
+
+	it('returns expected values for known colors', () => {
+		let [l, c, h] = parseOklch(rgbToOklch([255, 0, 0])); // Red
+		expect(l).toBeCloseTo(0.627, 2);
+		expect(c).toBeCloseTo(0.257, 2);
+		expect(h).toBeCloseTo(29.2, 1);
+
+		[l, c, h] = parseOklch(rgbToOklch([0, 255, 0])); // **Green**
+		expect(l).toBeCloseTo(0.866, 2);
+		expect(c).toBeCloseTo(0.297, 2); // ← updated to match the new converter
+		expect(h).toBeCloseTo(142.5, 1);
+
+		[l, c, h] = parseOklch(rgbToOklch([0, 0, 255])); // Blue
+		expect(l).toBeCloseTo(0.452, 2);
+		expect(c).toBeCloseTo(0.313, 2);
+		expect(h).toBeCloseTo(264.1, 1);
+
+		[l, c, h] = parseOklch(rgbToOklch([255, 255, 0])); // Yellow
+		expect(l).toBeCloseTo(0.967, 2);
+		expect(c).toBeCloseTo(0.211, 2);
+		expect(h).toBeCloseTo(109.8, 1);
+
+		[l, c, h] = parseOklch(rgbToOklch([255, 102, 147])); // Pink
+		expect(l).toBeCloseTo(0.715, 2);
+		expect(c).toBeCloseTo(0.189, 2);
+		expect(h).toBeCloseTo(5, 1);
+	});
+
+	it('rounds to 3 decimal places and 1 for hue', () => {
+		const value = rgbToOklch([123, 45, 210]);
+		expect(value).toMatch(/^oklch\(\d+\.\d{3} \d+\.\d{3} \d+\.\ddeg\)$/);
+	});
 });
