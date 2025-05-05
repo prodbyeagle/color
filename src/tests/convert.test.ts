@@ -74,7 +74,7 @@ describe('rgbToOklch', () => {
 
 		[l, c, h] = parseOklch(rgbToOklch([0, 255, 0])); // **Green**
 		expect(l).toBeCloseTo(0.866, 2);
-		expect(c).toBeCloseTo(0.297, 2); // ← updated to match the new converter
+		expect(c).toBeCloseTo(0.297, 2);
 		expect(h).toBeCloseTo(142.5, 1);
 
 		[l, c, h] = parseOklch(rgbToOklch([0, 0, 255])); // Blue
