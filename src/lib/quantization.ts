@@ -1,30 +1,9 @@
-import { filterSimilarColors } from './utils';
+import type { RGB } from '../types';
+import { distSq, filterSimilarColors } from './utils';
 
 const MAX_SAMPLE_SIZE = 2000;
 const MAX_ITERATIONS = 10;
 const ALPHA_THRESHOLD = 16;
-
-/**
- * Calculates the squared Euclidean distance between two RGB color arrays.
- *
- * The function computes the distance as the sum of squared differences between the red,
- * green, and blue components of two colors. It returns `Infinity` if either of the arrays
- * is `undefined`.
- *
- * @param a - The first color array `[r, g, b]`.
- * @param b - The second color array `[r, g, b]`.
- * @returns The squared Euclidean distance between the two colors.
- */
-function distSq(a: number[], b: number[]): number {
-	if (!a || !b) return Infinity;
-
-	let sum = 0;
-	for (let i = 0; i < 3; i++) {
-		const d = (a[i] ?? 0) - (b[i] ?? 0);
-		sum += d * d;
-	}
-	return sum;
-}
 
 /**
  * Shuffles an array in place using the Fisher-Yates algorithm.
@@ -63,16 +42,16 @@ export function quantize(
 	data: Uint8ClampedArray,
 	maxColors: number,
 	distanceThreshold = 10
-): number[][] {
-	const pixels: number[][] = [];
+): RGB[] {
+	const pixels: RGB[] = [];
 
 	for (let i = 0; i <= data.length - 4; i += 4) {
 		const r = data[i];
 		const g = data[i + 1];
 		const b = data[i + 2];
-		const a = data[i + 3]!;
+		const a = data[i + 3];
 
-		if (a < ALPHA_THRESHOLD) continue;
+		if (a! < ALPHA_THRESHOLD) continue;
 		pixels.push([r!, g!, b!]);
 	}
 
@@ -104,11 +83,11 @@ export function quantize(
  *           number of dominant colors requested.
  * @returns An array of `k` cluster centroids, each represented as `[r, g, b]`.
  */
-export function kMeans(pixels: number[][], k: number): number[][] {
+export function kMeans(pixels: RGB[], k: number): RGB[] {
 	if (pixels.length === 0) return [];
 
-	let centroids: number[][] = pixels.slice(0, k).map((p) => [...p]);
-	let clusters: number[][][] = Array.from({ length: k }, () => []);
+	let centroids: RGB[] = pixels.slice(0, k).map((p) => [...p]);
+	let clusters: RGB[][] = Array.from({ length: k }, () => []);
 
 	for (let iter = 0; iter < MAX_ITERATIONS; iter++) {
 		clusters = Array.from({ length: k }, () => []);
