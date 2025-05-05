@@ -3,18 +3,6 @@ import { getImageDataFromFile } from './lib/imageProcessing';
 import { quantize } from './lib/quantization';
 
 /**
- * Defines the supported output color formats.
- *
- * - `'rgb'`: Array of RGB triplets, e.g., `[255, 204, 0]`
- * - `'hex'`: Hexadecimal color strings, e.g., `'#ffcc00'`
- * - `'hsl'`: HSL strings, e.g., `'hsl(45, 100%, 50%)'`
- * - `'oklch'`: OKLCH strings, e.g., `'oklch(0.823 0.173 84.2deg)'`
- */
-export interface ColorFormat {
-	format: 'rgb' | 'hex' | 'hsl' | 'oklch';
-}
-
-/**
  * Extracts a color palette from an image file or blob, returning the most dominant colors
  * in the specified format.
  *
