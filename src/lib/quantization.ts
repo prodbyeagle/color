@@ -1,4 +1,4 @@
-import { filterSimilarColors, dist } from './utils';
+import { filterSimilarColors } from './utils';
 
 const MAX_SAMPLE_SIZE = 2000;
 const MAX_ITERATIONS = 10;
