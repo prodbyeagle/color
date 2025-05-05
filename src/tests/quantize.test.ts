@@ -1,10 +1,9 @@
 import { describe, expect, it } from 'bun:test';
 import { quantize, kMeans } from '../lib/quantization';
 import { dist } from '../lib/utils';
+import type { RGBA, RGB, PixelData } from '../types';
 
-function createImageData(
-	colors: [number, number, number, number][]
-): Uint8ClampedArray {
+function createImageData(colors: RGBA[]): PixelData {
 	return new Uint8ClampedArray(colors.flat());
 }
 
@@ -20,7 +19,7 @@ describe('quantize', () => {
 		const result = quantize(raw, 2, 5);
 		expect(result.length).toBeLessThanOrEqual(2);
 		expect(result).toEqual(
-			expect.arrayContaining([
+			expect.arrayContaining<RGB>([
 				expect.arrayContaining([255, 0, 0]),
 				expect.arrayContaining([0, 255, 0]),
 			])
@@ -55,7 +54,7 @@ describe('quantize', () => {
 
 describe('quantize (performance)', () => {
 	it('handles large input efficiently under MAX_SAMPLE_SIZE', () => {
-		const pixel = [100, 150, 200, 255];
+		const pixel: RGBA = [100, 150, 200, 255];
 		const raw = new Uint8ClampedArray(Array(4000).fill(pixel).flat());
 
 		const start = performance.now();
@@ -63,13 +62,13 @@ describe('quantize (performance)', () => {
 		const end = performance.now();
 
 		expect(result.length).toBeLessThanOrEqual(5);
-		expect(end - start).toBeLessThan(100); // <100ms acceptable baseline
+		expect(end - start).toBeLessThan(100);
 	});
 });
 
 describe('kMeans', () => {
 	it('clusters into the requested number of centroids', () => {
-		const pixels = [
+		const pixels: RGB[] = [
 			[255, 0, 0],
 			[254, 0, 0],
 			[0, 255, 0],
@@ -89,7 +88,7 @@ describe('kMeans', () => {
 	});
 
 	it('handles more clusters than data', () => {
-		const pixels = [
+		const pixels: RGB[] = [
 			[10, 10, 10],
 			[20, 20, 20],
 		];
