@@ -1,11 +1,4 @@
 /**
- * A tuple representing a color in 8-bit sRGB.
- * @example
- * const red: RGB = [255, 0, 0];
- */
-export type RGB = [number, number, number];
-
-/**
  * Clamp a number into the closed interval [0, 1].
  *
  * @param value – The input value to clamp.
