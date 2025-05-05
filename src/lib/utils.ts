@@ -1,3 +1,5 @@
+import type { RGB } from '../types';
+
 /**
  * Calculates the Euclidean distance between two RGB colors.
  *
@@ -12,7 +14,7 @@
  * const d = dist([255, 0, 0], [128, 0, 0]); // ≈ 127
  * ```
  */
-export function dist(a: number[], b: number[]): number {
+export function dist(a: RGB, b: RGB): number {
 	const len = Math.min(a.length, b.length);
 	let sum = 0;
 	for (let i = 0; i < len; i++) {
@@ -24,6 +26,25 @@ export function dist(a: number[], b: number[]): number {
 }
 
 /**
+ * Calculates the squared Euclidean distance between two RGB color arrays.
+ *
+ * The function computes the distance as the sum of squared differences between the red,
+ * green, and blue components of two colors. It returns `Infinity` if either of the arrays
+ * is `undefined`.
+ *
+ * @param a - The first color array `[r, g, b]`.
+ * @param b - The second color array `[r, g, b]`.
+ * @returns The squared Euclidean distance between the two colors.
+ */
+export function distSq(a: RGB, b: RGB): number {
+	let sum = 0;
+	for (let i = 0; i < 3; i++) {
+		sum += (a[i]! - b[i]!) ** 2;
+	}
+	return sum;
+}
+
+/**
  * Filters out similar colors using a distance threshold.
  * Identical colors or colors that are very close in distance will be filtered.
  *
@@ -31,11 +52,8 @@ export function dist(a: number[], b: number[]): number {
  * @param threshold - The maximum allowed distance for two colors to be considered similar.
  * @returns An array of filtered colors with no very similar colors.
  */
-export function filterSimilarColors(
-	colors: number[][],
-	threshold: number = 35
-): number[][] {
-	const filteredColors: number[][] = [];
+export function filterSimilarColors(colors: RGB[], threshold = 35): RGB[] {
+	const filteredColors: RGB[] = [];
 
 	for (const color of colors) {
 		let isSimilar = false;
