@@ -28,13 +28,7 @@ bunx jsr add @prodbyeagle/color
 #### With npm:
 
 ```
-npm install @prodbyeagle/color
-```
-
-#### With yarn:
-
-```
-yarn add @prodbyeagle/color
+npx jsr install @prodbyeagle/color
 ```
 
 ---
