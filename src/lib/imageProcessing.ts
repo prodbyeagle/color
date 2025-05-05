@@ -16,6 +16,7 @@
  * const imageData = await getImageDataFromFile(file);
  * const { width, height, data } = imageData;
  * ```
+ * @author prodbyeagle
  */
 export async function getImageDataFromFile(
 	file: Blob,

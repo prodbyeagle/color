@@ -22,6 +22,7 @@ import { rgbToHex, rgbToHsl, rgbToOklch } from './convert';
  * formatColors(palette, 'hex'); // ['#ff0000', '#00ff00']
  * formatColors(palette, 'hsl'); // [[0, 100, 50], [120, 100, 50]]
  * ```
+ * @author prodbyeagle
  */
 export function formatColors(
 	colors: number[][],

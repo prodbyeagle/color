@@ -13,6 +13,7 @@ import type { RGB } from '../types';
  * ```ts
  * const d = dist([255, 0, 0], [128, 0, 0]); // ≈ 127
  * ```
+ * @author prodbyeagle
  */
 export function dist(a: RGB, b: RGB): number {
 	const len = Math.min(a.length, b.length);
@@ -35,6 +36,7 @@ export function dist(a: RGB, b: RGB): number {
  * @param a - The first color array `[r, g, b]`.
  * @param b - The second color array `[r, g, b]`.
  * @returns The squared Euclidean distance between the two colors.
+ * @author prodbyeagle
  */
 export function distSq(a: RGB, b: RGB): number {
 	let sum = 0;
@@ -51,6 +53,7 @@ export function distSq(a: RGB, b: RGB): number {
  * @param colors - An array of RGB colors (e.g., [[255, 0, 0], [0, 255, 0]]).
  * @param threshold - The maximum allowed distance for two colors to be considered similar.
  * @returns An array of filtered colors with no very similar colors.
+ * @author prodbyeagle
  */
 export function filterSimilarColors(colors: RGB[], threshold = 35): RGB[] {
 	const filteredColors: RGB[] = [];

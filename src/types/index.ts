@@ -1,15 +1,16 @@
 /**
  * A tuple representing a color in 8-bit sRGB.
+ * @author prodbyeagle
  * @example
  * const red: RGB = [255, 0, 0];
  */
 export type RGB = [number, number, number];
 export type RGBA = [r: number, g: number, b: number, a: number];
 export type PixelData = Uint8ClampedArray;
-export type PixelMatrix = RGB[];
 
 /**
  * Defines the supported output color formats.
+ * @author prodbyeagle
  *
  * - `'rgb'`: Array of RGB triplets, e.g., `[255, 204, 0]`
  * - `'hex'`: Hexadecimal color strings, e.g., `'#ffcc00'`

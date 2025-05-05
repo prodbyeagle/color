@@ -3,6 +3,7 @@
  *
  * @param value – The input value to clamp.
  * @returns The clamped value, never less than 0 or greater than 1.
+ * @author prodbyeagle
  */
 function clamp01(value: number): number {
 	return value < 0 ? 0 : value > 1 ? 1 : value;
@@ -14,6 +15,7 @@ function clamp01(value: number): number {
  *
  * @param channel – An sRGB component (0–255). Non-finite values default to 0.
  * @returns The linear-light equivalent (0–1).
+ * @author prodbyeagle
  */
 function srgbToLinear(channel: number): number {
 	const normalized = clamp01(Number.isFinite(channel) ? channel / 255 : 0);
@@ -31,6 +33,7 @@ function srgbToLinear(channel: number): number {
  *
  * @example
  * rgbToHex([255, 204, 0]); // '#ffcc00'
+ * @author prodbyeagle
  */
 export function rgbToHex(rgb: number[]): string {
 	const [r = 0, g = 0, b = 0] = rgb;
@@ -54,6 +57,7 @@ export function rgbToHex(rgb: number[]): string {
  *
  * @example
  * rgbToHsl([255, 204, 0]); // 'hsl(45, 100%, 50%)'
+ * @author prodbyeagle
  */
 export function rgbToHsl(rgb: number[]): string {
 	const [r = 0, g = 0, b = 0] = rgb;
@@ -104,6 +108,7 @@ export function rgbToHsl(rgb: number[]): string {
  *
  * @example
  * rgbToOklch([255, 102, 147]); // 'oklch(0.747 0.258 19.6deg)'
+ * @author prodbyeagle
  */
 export function rgbToOklch(rgb: number[]): string {
 	const [rLin, gLin, bLin] = rgb.map(srgbToLinear);

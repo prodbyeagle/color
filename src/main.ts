@@ -30,6 +30,7 @@ import { quantize } from './lib/quantization';
  * const palette = await extractColors(file, 5, 'oklch');
  * console.log(palette); // ['oklch(0.82 0.15 90.0deg)', ...]
  * ```
+ * @author prodbyeagle
  */
 export async function extractColors(
 	imageFile: File | Blob,

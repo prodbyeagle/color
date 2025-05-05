@@ -13,6 +13,7 @@ const ALPHA_THRESHOLD = 16;
  *
  * @param arr - The array to shuffle.
  * @returns A new array with the shuffled elements.
+ * @author prodbyeagle
  */
 function shuffle<T>(arr: T[]): T[] {
 	const copy = [...arr];
@@ -37,6 +38,7 @@ function shuffle<T>(arr: T[]): T[] {
  * @param maxColors - The maximum number of dominant colors to extract from the image.
  * @param distanceThreshold - The threshold for filtering out similar colors from the final result. Default is 10.
  * @returns An array of the dominant colors as RGB triplets, e.g., `[[255, 0, 0], [0, 255, 0], ...]`.
+ * @author prodbyeagle
  */
 export function quantize(
 	data: Uint8ClampedArray,
@@ -82,6 +84,7 @@ export function quantize(
  * @param k - The number of clusters (centroids) to compute. Typically corresponds to the
  *           number of dominant colors requested.
  * @returns An array of `k` cluster centroids, each represented as `[r, g, b]`.
+ * @author prodbyeagle
  */
 export function kMeans(pixels: RGB[], k: number): RGB[] {
 	if (pixels.length === 0) return [];
