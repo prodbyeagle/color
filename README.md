@@ -51,7 +51,7 @@ import { extractColors } from '@prodbyeagle/color';
 // Example usage with an image file
 const imageFile = document.getElementById('image') as HTMLImageElement;
 
-const colors = await extractColors(imageFile, 5, 'hex');
+const colors = await extractColors(imageFile, 5, 'hex', 50);
 console.log(colors); // Example output: ['#ffcc00', '#003366', '#cccccc']
 ```
 
