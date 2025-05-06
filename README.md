@@ -45,21 +45,9 @@ import { extractColors } from '@prodbyeagle/color';
 // Example usage with an image file
 const imageFile = document.getElementById('image') as HTMLImageElement;
 
-const colors = await extractColors(imageFile, 5, 'hex', 50);
+const colors = await extractColors(imageFile, 5, 'hex');
 console.log(colors); // Example output: ['#ffcc00', '#003366', '#cccccc']
 ```
-
----
-
-### 📚 API Reference
-
-#### `extractColors(imageFile: File | Blob, maxColors: number, format: ColorFormat = 'hex')`
-
--   **imageFile** (`File | Blob`): The image file or blob source from which colors will be extracted.
--   **maxColors** (`number`): The maximum number of dominant colors to extract (e.g., 5 for a palette of 5 colors).
--   **format** (`ColorFormat`, optional): The format in which to return the colors. Can be `'rgb'`, `'hex'`, `'hsl'`, or `'oklch'` (default is `'hex'`).
-
-**Returns**: A promise that resolves to an array of colors in the specified format.
 
 ---
 
