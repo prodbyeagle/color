@@ -19,16 +19,16 @@
 
 To install `@prodbyeagle/color` into your project:
 
-#### With Bun (Recommended for performance):
+#### With Bun:
 
 ```
 bunx jsr add @prodbyeagle/color
 ```
 
-#### With npm:
+#### With Deno:
 
 ```
-npx jsr install @prodbyeagle/color
+deno add jsr:@prodbyeagle/color
 ```
 
 ---
